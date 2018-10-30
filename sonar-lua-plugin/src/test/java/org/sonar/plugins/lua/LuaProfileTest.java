@@ -46,7 +46,7 @@ public class LuaProfileTest {
 
     assertThat(profile.getLanguage()).isEqualTo(Lua.KEY);
     assertThat(profile.getName()).isEqualTo(CheckList.SONAR_WAY_PROFILE);
-    assertThat(profile.getActiveRulesByRepository(CheckList.REPOSITORY_KEY)).hasSize(15);
+    assertThat(profile.getActiveRulesByRepository(CheckList.REPOSITORY_KEY)).hasSize(14);
     assertThat(validation.hasErrors()).isFalse();
   }
 

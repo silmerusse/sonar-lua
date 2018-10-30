@@ -28,10 +28,10 @@ import org.sonar.lua.grammar.LuaGrammar;
 import org.sonar.lua.api.LuaMetric;
 import org.sonar.lua.checks.utils.LuaCheck;
 import org.sonar.lua.checks.utils.Tags;
+import org.sonar.lua.SourceFuncCall;
 import org.sonar.squidbridge.annotations.ActivatedByDefault;
 import org.sonar.squidbridge.annotations.SqaleLinearWithOffsetRemediation;
 import org.sonar.squidbridge.api.SourceClass;
-import org.sonar.squidbridge.api.SourceFunction;
 import org.sonar.squidbridge.checks.ChecksHelper;
 
 @Rule(
@@ -61,7 +61,7 @@ public class FunctionCallComplexityCheck extends LuaCheck {
 
   @Override
   public void leaveNode(AstNode node) {
-	  SourceFunction function = (SourceFunction) getContext().peekSourceCode();
+	SourceFuncCall function = (SourceFuncCall) getContext().peekSourceCode();
 
     int functionComplexity = ChecksHelper.getRecursiveMeasureInt(function, LuaMetric.COMPLEXITY);
     if (functionComplexity > maximumFunctionCallComplexityThreshold) {

@@ -35,7 +35,6 @@ public class NestedControlFlowDepthCheckTest {
     SourceFile file = LuaAstScanner.scanSingleFile(new File("src/test/resources/checks/nestedControlFlowStmt.lua"), check);
     CheckMessagesVerifier.verify(file.getCheckMessages())
       .next().atLine(7).withMessage("Refactor this code to not nest more than 3 if/for/while/ statements.")
-      .next().atLine(16).withMessage("Refactor this code to not nest more than 3 if/for/while/ statements.")
       .noMore();
   }
 
