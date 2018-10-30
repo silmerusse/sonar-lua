@@ -38,6 +38,7 @@ import org.sonar.lua.LuaAstScanner;
 import org.sonar.lua.LuaConfiguration;
 import org.sonar.lua.api.LuaMetric;
 import org.sonar.lua.checks.CheckList;
+import org.sonar.lua.lexer.LuaLexer;
 
 import org.sonar.lua.metrics.FileLinesVisitor;
 import org.sonar.plugins.lua.core.Lua;
@@ -102,10 +103,14 @@ public class LuaSquidSensor implements Sensor {
     scanner.scanFiles(ImmutableList.copyOf(files));
 
     Collection<SourceCode> squidSourceFiles = scanner.getIndex().search(new QueryByType(SourceFile.class));
-    save(context, squidSourceFiles);
+    save(context, squidSourceFiles, visitors, configuration);
   }
 
-  private void save(SensorContext context, Collection<SourceCode> squidSourceFiles) {
+  private void save(
+          SensorContext context, 
+          Collection<SourceCode> squidSourceFiles, 
+          List<SquidAstVisitor<LexerlessGrammar>> visitors,
+          LuaConfiguration configuration) {
     FileSystem fileSystem = context.fileSystem();
     for (SourceCode squidSourceFile : squidSourceFiles) {
       SourceFile squidFile = (SourceFile) squidSourceFile;
